@@ -45,7 +45,7 @@ pipeline {
         stage('Copy to Remote Server') {
             steps {
                 // Jenkins가 원격 서버에 ssh 접속할 수 있도록 ssh agant 사용
-                sshagent (credentials: [environment.SSH_CREDENTIALS_ID]) {
+                sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
                     // 원격 서버에 배포 디렉토리 생성 (없으면 새로 만들고 있음)
                     sh "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} \"mkdir -p ${REMOTE_DIR}\""
                     // JAR 파일과 Dockerfile을 원격 서버에 복사
@@ -56,15 +56,15 @@ pipeline {
 
         stage('Remote Docker Build & Deploy') {
             steps {
-                sshagent (credentials: [environment.SSH_CREDENTIALS_ID]) {
+                sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
                     // 원격 서버에서 도커 컨테이너를 제거하고 새로 빌드 및 실행
                     sh """
-                    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} << ENDSSH
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} << ENDSSH
                         cd ${REMOTE_DIR} || exit 1                         # 복사한 디렉토리로 이동
                         docker rm -f ${CONTAINER_NAME} || true             # 이전에 실행 중인 컨테이너 삭제 (없으면 무시)
                         docker build -t ${DOCKER_IMAGE} .                  # 현재 디렉토리에서 Docker 이미지 빌드
                         docker run -d --name ${CONTAINER_NAME} -p ${PORT}:${PORT} ${DOCKER_IMAGE} # 새 컨테이너 실행
-                    ENDSSH
+ENDSSH
                     """
                 }
             }
