@@ -17,7 +17,7 @@
 <p th:text="${product.description}"></p>
 
 <!-- ✅ 절대 경로로 수정 -->
-<a th:href="@{/cart/add/{id}(id=${product.id})}">장바구니 담기</a><br>
+<a th:href="@{'/cart/add/' + ${product.id}}">장바구니 담기</a><br>
 
 <!-- 목록으로 이동 -->
 <a href="/">← 목록으로</a>
