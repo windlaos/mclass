@@ -84,6 +84,41 @@
             opacity: 0.85;
         }
 
+        .site-footer {
+            background: #222;
+            padding: 25px 0;
+            margin-top: 50px;
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: #eee;
+            text-decoration: none;
+            margin: 0 8px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #1ec28b; /* ✨ 강조 색상 */
+        }
+
+        .divider {
+            color: #555;
+        }
+
+        .footer-links {
+            margin-bottom: 6px;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: #777;
+            margin: 0;
+        }
+
         @media(max-width: 600px) {
             .product-card {
                 width: 45%;
@@ -115,9 +150,16 @@
         </div>
     </div>
 </div>
-    <footer style="text-align:center; margin-top: 40px;">
-        <a href="/company">회사소개</a> |
-        <a href="/policy/privacy">개인정보처리방침</a>
-    </footer>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/company">회사소개</a>
+    <span class="divider">|</span>
+    <a href="/policy/privacy">개인정보처리방침</a>
+  </div>
+  <p class="copyright">
+    © 2025 Kyongdong Mall. All rights reserved.
+  </p>
+</footer>
+
 </body>
 </html>
