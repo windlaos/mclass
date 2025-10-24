@@ -1,14 +1,16 @@
-FROM  openjdk:17-jdk
+FROM openjdk:17-jdk
 
-# jar 파일이 저장될 작업 디렉토리 설정
+# 작업 디렉토리 설정
 WORKDIR /app
 
-# Maven 또는 Gradle 빌드 후 생성된 jar 파일을 컨테이너 내부 /app 디렉토리에 app.jar 이름으로 복사
+# JAR 파일 복사
 COPY app.jar app.jar
-# Host(Jenkins)에 생성된 app.jar 파일을 컨테이너 내부 /app/app.jar 파일로 복사
 
-# 컨테이너가 외부와 통신하기 위한 port 설정
-EXPOSE 8081
+# ✅ Spring 프로파일(prod) 활성화
+ENV SPRING_PROFILES_ACTIVE=prod
 
-# 컨테이너가 시작될때 자동으로 java -jar app.jar 명령을 실행하도록 설정
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# ✅ 80 포트로 서비스
+EXPOSE 80
+
+# ✅ 애플리케이션 실행
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
