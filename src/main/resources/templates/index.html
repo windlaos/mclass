@@ -6,7 +6,7 @@
     <style>
         .product-container {
             display: flex;
-            gap: 20px; /* 상품 간 간격 */
+            gap: 20px; /* 간격 */
         }
         .product-card {
             text-align: center;
@@ -16,8 +16,9 @@
 <body>
 <h1>🛍 쇼핑몰</h1>
 
-<div class="product-container" th:each="product : ${products}">
-    <div class="product-card">
+<!-- ✅ th:each를 여기로 옮김 -->
+<div class="product-container">
+    <div class="product-card" th:each="product : ${products}">
         <a th:href="@{|/product/${product.id}|}">
             <img th:src="${product.imageUrl}" width="200">
         </a>
@@ -25,6 +26,5 @@
         <p th:text="${product.price + '원'}"></p>
     </div>
 </div>
-
 </body>
 </html>
