@@ -12,9 +12,13 @@ public class CartController {
 
     private final ProductService productService;
 
-    @GetMapping("/add-to-cart/{id}")
-    public String addToCart(@PathVariable Long id) {
-        System.out.println("장바구니 담기 성공: " + id);
-        return "redirect:/";
+    @GetMapping
+    public String viewCart(HttpSession session, Model model) {
+        @SuppressWarnings("unchecked")
+        List<Product> cart = (List<Product>) session.getAttribute("cart");
+        if (cart == null) cart = new ArrayList<>();
+    
+        model.addAttribute("cart", cart);
+        return "cart";
     }      
 }
