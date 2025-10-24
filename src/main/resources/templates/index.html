@@ -1,165 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>쇼핑몰 메인</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .product-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-        }
-
-        .product-card {
-            width: 200px;
-            background: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform .2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-6px);
-        }
-
-        .product-card img {
-            width: 100%;
-            border-radius: 6px;
-        }
-
-        .product-name {
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .product-price {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e60023;
-            margin: 10px 0;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .btn-detail {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .btn-cart {
-            background-color: #28a745;
-            color: #fff;
-        }
-
-        .btn:hover {
-            opacity: 0.85;
-        }
-
-        .site-footer {
-            background: #222;
-            padding: 25px 0;
-            margin-top: 50px;
-            text-align: center;
-            color: #aaa;
-            font-size: 14px;
-        }
-
-        .footer-links a {
-            color: #eee;
-            text-decoration: none;
-            margin: 0 8px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #1ec28b; /* ✨ 강조 색상 */
-        }
-
-        .divider {
-            color: #555;
-        }
-
-        .footer-links {
-            margin-bottom: 6px;
-        }
-
-        footer p {
-            font-size: 12px;
-            color: #777;
-            margin: 0;
-    }
-
-        @media(max-width: 600px) {
-            .product-card {
-                width: 45%;
-            }
-        }
-    </style>
+    <title>경동 쇼핑몰</title>
 </head>
-
 <body>
 
-<h1>경산 + 동해몰 DEMO</h1>
+<h2>경동 쇼핑몰</h2>
 
-<div class="product-container">
-    <div class="product-card" th:each="product : ${products}">
-        <img th:src="${product.imageUrl}" alt="상품 이미지">
+<!-- ✅ 장바구니 링크 수정 -->
+<a th:href="@{/cart}">장바구니</a>
 
-        <div class="product-name" th:text="${product.name}"></div>
-        <div class="product-price" th:text="${product.price + '원'}"></div>
+<hr>
 
-        <div class="btn-group">
-            <button class="btn btn-detail"
-                    th:onclick="|location.href='/product/${product.id}'|">
-                상세보기
-            </button>
-            <a class="btn btn-cart"
-                    th:onclick="|location.href='/add-to-cart/${product.id}'|">
-                장바구니
-            </a>
-        </div>
-    </div>
+<div th:each="product : ${products}">
+    <img th:src="@{${product.imageUrl}}" width="200"><br>
+    <a th:href="@{'/product/' + ${product.id}}" th:text="${product.name}"></a><br>
+    <p th:text="'가격 : ' + ${product.price} + '원'"></p>
+    <hr>
 </div>
-<footer class="site-footer">
-  <div class="footer-links">
-    <a href="/company">회사소개</a>
-    <span class="divider">|</span>
-    <a href="/policy/privacy">개인정보처리방침</a>
-  </div>
-  <p class="copyright">
-    © 2025 Kyongdong Mall. All rights reserved.
-  </p>
-</footer>
 
 </body>
 </html>
+
