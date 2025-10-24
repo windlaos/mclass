@@ -1,78 +1,35 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.CartItem;
+import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
-import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
+@RequestMapping("/cart")
 public class CartController {
 
     private final ProductService productService;
 
-    public CartController(ProductService productService) {
-        this.productService = productService;
-    }
-
-    @GetMapping("/add-to-cart/{id}")
+    @GetMapping("/add/{id}")
     public String addToCart(@PathVariable Long id, HttpSession session) {
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        if (cart == null) cart = new ArrayList<>();
+        Product product = productService.findById(id);
 
-        var product = productService.getProductById(id);
-
-        boolean exists = false;
-        for (CartItem item : cart) {
-            if (item.getId().equals(id)) {
-                item.increaseQuantity();
-                exists = true;
-                break;
-            }
+        if (product != null) {
+            session.setAttribute("cartProduct", product);
         }
 
-        if (!exists) {
-            cart.add(new CartItem(product.getId(), product.getName(), product.getImageUrl(), product.getPrice()));
-        }
-
-        session.setAttribute("cart", cart);
-        return "redirect:/cart";
+        return "redirect:/";
     }
 
-    @GetMapping("/cart")
-    public String viewCart(HttpSession session, Model model) {
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        if (cart == null) cart = new ArrayList<>();
-
-        model.addAttribute("cart", cart);
+    @GetMapping
+    public String showCart(HttpSession session, Model model) {
+        model.addAttribute("cartProduct", session.getAttribute("cartProduct"));
         return "cart";
-    }
-
-    @GetMapping("/cart/increase/{id}")
-    public String increase(@PathVariable Long id, HttpSession session) {
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        for (CartItem item : cart) {
-            if (item.getId().equals(id)) {
-                item.increaseQuantity();
-                break;
-            }
-        }
-        return "redirect:/cart";
-    }
-
-    @GetMapping("/cart/decrease/{id}")
-    public String decrease(@PathVariable Long id, HttpSession session) {
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        for (CartItem item : cart) {
-            if (item.getId().equals(id)) {
-                item.decreaseQuantity();
-                break;
-            }
-        }
-        return "redirect:/cart";
     }
 }
