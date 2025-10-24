@@ -8,7 +8,7 @@
         body {
             font-family: 'Arial', sans-serif;
             white-space: pre-wrap;
-            line-height: 1.6;
+            line-height: 1.35; /* 기존 1.6 → 1.35 로 축소 */
             padding: 40px 12%;
             background-color: #ffffff;
             color: #222;
@@ -18,7 +18,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 4px; /* 기존 8px → 절반 */
         }
 
         .policy-title {
@@ -33,15 +33,20 @@
         }
 
         hr {
-            margin: 16px 0 30px;
+            margin: 12px 0 20px; /* 상하 간격 줄임 */
             border: 0;
             border-top: 2px solid #eee;
         }
 
         h2 {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
-            margin-top: 32px;
+            margin-top: 18px; /* 기존 32px → 18px */
+            margin-bottom: 6px; /* 제목 아래 간격 줄임 */
+        }
+
+        p {
+            margin: 6px 0; /* 문단 간격 조정 */
         }
     </style>
 </head>
@@ -132,7 +137,7 @@
 개정 시 웹사이트를 통해 사전 안내합니다.
 </p>
 
-<br><br>
+<br>
 <p>
 본 개인정보처리방침은 <strong>2025년 1월 1일</strong>부터 적용됩니다.
 </p>
