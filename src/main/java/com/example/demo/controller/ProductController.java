@@ -1,29 +1,33 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/product")
 public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/{id}")
+    /** ✅ 초기 화면 : 상품 리스트 조회 */
+    @GetMapping("/")
+    public String index(Model model) {
+        List<Product> products = productService.findAll();
+        model.addAttribute("products", products);
+        return "index";
+    }
+
+    /** ✅ 상세보기 */
+    @GetMapping("/product/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        var product = productService.findById(id);
-
-        if (product == null) {
-            return "redirect:/"; // 상품 없을 경우 홈으로
-        }
-
-        model.addAttribute("product", product);
-        return "product-detail"; // ✅ 뷰 존재해야 함!
+        model.addAttribute("product", productService.findById(id));
+        return "product-detail";
     }
 }
