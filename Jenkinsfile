@@ -55,14 +55,17 @@ pipeline {
         }
      
         stage('Remote Docker Build & Deploy') {
-steps {
-    sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
-        sh """
+            steps {
+                sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
+                    sh """
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} "
     cd ${REMOTE_DIR} || exit 1
     docker rm -f ${CONTAINER_NAME} || true
     docker build -t ${DOCKER_IMAGE} .
-    docker run -d --name ${CONTAINER_NAME} -p 80:${PORT} ${DOCKER_IMAGE}
+    docker run -d --name ${CONTAINER_NAME} \
+        -p 80:8081 \
+        -e SPRING_PROFILES_ACTIVE=prod \
+        ${DOCKER_IMAGE}
 "
 """
                }
