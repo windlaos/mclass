@@ -84,7 +84,6 @@
             opacity: 0.85;
         }
 
-        /* ✅ 반응형 */
         @media(max-width: 600px) {
             .product-card {
                 width: 45%;
@@ -101,5 +100,20 @@
     <div class="product-card" th:each="product : ${products}">
         <img th:src="${product.imageUrl}" alt="상품 이미지">
 
-        <div class="product-name" th:text="${product.name
+        <div class="product-name" th:text="${product.name}"></div>
+        <div class="product-price" th:text="${product.price + '원'}"></div>
 
+        <div class="btn-group">
+            <button class="btn btn-detail"
+                    th:onclick="|location.href='/product/${product.id}'|">
+                상세보기
+            </button>
+            <button class="btn btn-cart">
+                장바구니
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
