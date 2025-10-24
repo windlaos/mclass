@@ -63,7 +63,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@$
     docker rm -f ${CONTAINER_NAME} || true
     docker build -t ${DOCKER_IMAGE} .
     docker run -d --name ${CONTAINER_NAME} \
-        -p 80:8081 \
+        -p 80:80 \
         -e SPRING_PROFILES_ACTIVE=prod \
         ${DOCKER_IMAGE}
 "
