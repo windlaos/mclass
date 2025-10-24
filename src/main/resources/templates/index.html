@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>쇼핑몰 메인</title>
+</head>
+<body>
+<h1>🛍️ 쇼핑몰</h1>
+
+<div th:each="product : ${products}">
+    <a th:href="@{|/product/${product.id}|}">
+        <img th:src="${product.imageUrl}" width="200">
+    </a>
+    <p th:text="${product.name}"></p>
+    <p th:text="${product.price + '원'}"></p>
+    <hr>
+</div>
+
+</body>
+</html>
