@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 로그인 - 경동 쇼핑몰</title>
+</head>
+<body>
+<h2>경동 쇼핑몰 관리자 로그인</h2>
+
+<form method="post" action="/admin/login">
+    <label>ID</label>
+    <input type="text" name="username" placeholder="관리자 ID" required><br>
+
+    <label>비밀번호</label>
+    <input type="password" name="password" placeholder="Password" required><br>
+
+    <button type="submit">로그인</button>
+</form>
+
+</body>
+</html>

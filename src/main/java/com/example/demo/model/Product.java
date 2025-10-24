@@ -8,13 +8,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor  // 기본 생성자 필수(JPA용)
+@NoArgsConstructor
 @Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 자동 증가 PK
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -25,7 +25,9 @@ public class Product {
     @Column(nullable = false)
     private int price;
 
-    // ✅ 기존 생성자 계속 사용 가능
+    @Column
+    private String description;
+
     public Product(Long id, String name, String imageUrl, int price) {
         this.id = id;
         this.name = name;

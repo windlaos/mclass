@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록 - 경동 쇼핑몰</title>
+</head>
+<body>
+<h2>상품 목록</h2>
+
+<a href="/admin/product/new">➕ 새 상품 등록</a>
+<hr>
+
+<table border="1" cellpadding="6">
+    <tr>
+        <th>ID</th>
+        <th>상품명</th>
+        <th>가격</th>
+    </tr>
+
+    <tr th:each="p : ${products}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.price} + '원'"></td>
+    </tr>
+</table>
+
+</body>
+</html>

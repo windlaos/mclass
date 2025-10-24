@@ -1,24 +1,32 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
-
+import com.example.demo.dto.ProductDto;
 import com.example.demo.model.Product;
+import com.example.demo.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    public List<Product> getProducts() {
-        return List.of(
-            new Product(1L, "상품1", "/images/product1.jpg", 20000),
-            new Product(2L, "상품2", "/images/product2.jpg", 30000)
-        );
+
+    private final ProductRepository productRepository;
+
+    public void save(ProductDto dto) {
+        Product product = new Product();
+        product.setName(dto.getName());
+        product.setPrice(dto.getPrice());
+        product.setDescription(dto.getDescription());
+        productRepository.save(product);
     }
 
-    public Product getProductById(Long id) {
-        return getProducts().stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    public Product findById(Long id){
+        return productRepository.findById(id).orElse(null);
     }
 }
