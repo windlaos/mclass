@@ -8,7 +8,7 @@
         body {
             font-family: 'Arial', sans-serif;
             white-space: pre-wrap;
-            line-height: 1.35; /* 기존 1.6 → 1.35 로 축소 */
+            line-height: 1.2; /* 기존 대비 더 줄임 */
             padding: 40px 12%;
             background-color: #ffffff;
             color: #222;
@@ -18,35 +18,39 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px; /* 기존 8px → 절반 */
+            margin-bottom: 2px; /* 기존 4px → 2px */
         }
 
         .policy-title {
-            font-size: 32px;
+            font-size: 30px; /* 살짝 조정하여 균형감 */
             font-weight: 800;
             margin: 0;
         }
 
         .policy-date {
-            font-size: 16px;
+            font-size: 15px;
             color: #666;
         }
 
         hr {
-            margin: 12px 0 20px; /* 상하 간격 줄임 */
+            margin: 8px 0 14px; /* 조금 더 압축 */
             border: 0;
-            border-top: 2px solid #eee;
+            border-top: 1px solid #eee;
         }
 
         h2 {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 700;
-            margin-top: 18px; /* 기존 32px → 18px */
-            margin-bottom: 6px; /* 제목 아래 간격 줄임 */
+            margin-top: 14px;
+            margin-bottom: 4px;
         }
 
         p {
-            margin: 6px 0; /* 문단 간격 조정 */
+            margin: 4px 0; /* 문단 간격 최소화 */
+        }
+
+        br {
+            line-height: 0.5; /* 공백 최소화 */
         }
     </style>
 </head>
