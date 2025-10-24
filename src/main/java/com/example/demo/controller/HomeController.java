@@ -8,16 +8,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "index";
-    }
-
-    @GetMapping("/company")
-    public String company() {
-        return "company";
-    }
-
-    @GetMapping("/privacy")
-    public String privacy() {
-        return "privacy";
+        return "index";  // 상품 목록 페이지
     }
 }
+
