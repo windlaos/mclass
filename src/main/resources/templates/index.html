@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>쇼핑몰 메인</title>
+    <style>
+        .product-container {
+            display: flex;
+            gap: 20px; /* 상품 간 간격 */
+        }
+        .product-card {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<h1>🛍️ 쇼핑몰</h1>
+<h1>🛍 쇼핑몰</h1>
 
-<div th:each="product : ${products}">
-    <a th:href="@{|/product/${product.id}|}">
-        <img th:src="${product.imageUrl}" width="200">
-    </a>
-    <p th:text="${product.name}"></p>
-    <p th:text="${product.price + '원'}"></p>
-    <hr>
+<div class="product-container" th:each="product : ${products}">
+    <div class="product-card">
+        <a th:href="@{|/product/${product.id}|}">
+            <img th:src="${product.imageUrl}" width="200">
+        </a>
+        <p th:text="${product.name}"></p>
+        <p th:text="${product.price + '원'}"></p>
+    </div>
 </div>
 
 </body>
