@@ -8,13 +8,20 @@
 
 <h2 th:text="${product.name}"></h2>
 
-<img th:src="@{${product.imageUrl}}" width="300"><br><br>
+<!-- 이미지가 없으면 기본 이미지 로드하도록 수정 -->
+<img th:src="@{${product.imageUrl}}"
+     onerror="this.src='/images/no_image.png';"
+     width="300"><br><br>
 
 <p th:text="'가격 : ' + ${product.price} + '원'"></p>
 <p th:text="${product.description}"></p>
 
-<a th:href="@{'/cart/add/' + ${product.id}}">장바구니 담기</a><br>
+<!-- ✅ 절대 경로로 수정 -->
+<a th:href="@{/cart/add/{id}(id=${product.id})}">장바구니 담기</a><br>
+
+<!-- 목록으로 이동 -->
 <a href="/">← 목록으로</a>
 
 </body>
 </html>
+
