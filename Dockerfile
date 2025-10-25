@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY app.jar /app/app.jar
 
+# ✅ Spring Boot 정적 리소스 복사
+COPY src/main/resources/static/ /app/static/
+
 EXPOSE 80
 
 ENV SPRING_PROFILES_ACTIVE=prod

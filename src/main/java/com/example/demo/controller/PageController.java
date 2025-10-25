@@ -6,15 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
-    // 회사소개 페이지
     @GetMapping("/company")
     public String company() {
-        return "company";
+        return "company"; // templates/company.html
     }
 
-    // 개인정보처리방침 페이지
-    @GetMapping("/policy/privacy")
-    public String privacyPolicy() {
-        return "privacy";
+    @GetMapping("/privacy")
+    public String privacy() {
+        return "privacy"; // templates/privacy.html
     }
 }
+
