@@ -28,12 +28,23 @@ pipeline {
             }
         }
 
+        stage('Prepare Build Artifacts') {
+            steps {
+                sh '''
+                    mkdir -p deploy
+                    cp Dockerfile deploy/
+                    cp target/demo-0.0.1-SNAPSHOT.jar deploy/app.jar
+                    cp -R src/main/resources/static/images deploy/static/images
+                '''
+            }
+        }
+
         stage('Copy to Remote Server') {
             steps {
-                sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} "rm -rf ${REMOTE_DIR} && mkdir -p ${REMOTE_DIR}"
-                    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r . ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}/
+                    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r deploy/* ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}/
                     """
                 }
             }
@@ -41,14 +52,14 @@ pipeline {
 
         stage('Remote Docker Build & Deploy') {
             steps {
-                sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} "
                         cd ${REMOTE_DIR}
                         docker rm -f ${CONTAINER_NAME} || true
                         docker build -t ${DOCKER_IMAGE} .
                         docker run -d --name ${CONTAINER_NAME} \\
-                            -p 80:80 \\
+                            -p 8080:8080 \\
                             -e SPRING_PROFILES_ACTIVE=prod \\
                             ${DOCKER_IMAGE}
                     "
@@ -58,3 +69,4 @@ pipeline {
         }
     }
 }
+
