@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Product; // ✅ 수정됨
+import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -18,30 +18,23 @@ public class CartController {
 
     private final ProductService productService;
 
+    @GetMapping
+    public String viewCart(HttpSession session, Model model) {
+        List<Product> cart = (List<Product>) session.getAttribute("CART");
+        if (cart == null) cart = new ArrayList<>();
+        model.addAttribute("cart", cart);
+        return "cart";
+    }
+
     @GetMapping("/add/{id}")
     public String addToCart(@PathVariable Long id, HttpSession session) {
-        @SuppressWarnings("unchecked")
-        List<Product> cart = (List<Product>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-        }
+        List<Product> cart = (List<Product>) session.getAttribute("CART");
+        if (cart == null) cart = new ArrayList<>();
 
         Product product = productService.findById(id);
         cart.add(product);
 
-        session.setAttribute("cart", cart);
+        session.setAttribute("CART", cart);
         return "redirect:/cart";
-    }
-
-    @GetMapping
-    public String viewCart(HttpSession session, Model model) {
-        @SuppressWarnings("unchecked")
-        List<Product> cart = (List<Product>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-        }
-
-        model.addAttribute("cart", cart);
-        return "cart";
     }
 }

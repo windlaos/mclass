@@ -19,6 +19,11 @@ public class ProductService {
 
     public Product findById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다. id=" + id));
+    }
+
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 }
+

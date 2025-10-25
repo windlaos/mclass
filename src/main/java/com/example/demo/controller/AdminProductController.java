@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ProductDto;
+import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,27 +8,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/admin/product")
 @RequiredArgsConstructor
+@RequestMapping("/admin/product")
 public class AdminProductController {
 
     private final ProductService productService;
 
     @GetMapping("/new")
-    public String productForm(Model model) {
-        model.addAttribute("product", new ProductDto());
-        return "admin/product_form";
+    public String newProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "admin/product-form";
     }
 
-    @PostMapping("/new")
-    public String save(ProductDto dto) {
-        productService.save(dto);
-        return "redirect:/admin/product/list";
-    }
-
-    @GetMapping("/list")
-    public String productList(Model model) {
-        model.addAttribute("products", productService.findAll());
-        return "admin/product_list";
+    @PostMapping("/save")
+    public String save(@ModelAttribute Product product) {
+        productService.save(product);
+        return "redirect:/";
     }
 }
