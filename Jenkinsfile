@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3.9.11'
-        jdk 'OpenJDK17'
-        git 'Default'
+        maven 'Maven 3.9.11'
+        jdk 'JAVA_HOME'
+        git 'git'
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
             }
         }
 
-        stage('Maven Build') {
+        stage('Build') {
             steps {
                 sh 'mvn clean package -DskipTests'
             }
