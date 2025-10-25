@@ -57,7 +57,7 @@ pipeline {
                         docker rm -f springboot-container || true &&
                         docker build -t demo-app . &&
                         docker run -d --name springboot-container \
-                            -p 8080:8080 \
+                            -p 8080:80 \
                             -e SPRING_PROFILES_ACTIVE=prod \
                             demo-app &&
                         sudo systemctl restart nginx
