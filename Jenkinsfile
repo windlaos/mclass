@@ -62,10 +62,11 @@ pipeline {
                         cd ${REMOTE_DIR}
                         docker rm -f ${CONTAINER_NAME} || true
                         docker build -t ${DOCKER_IMAGE} .
-                        docker run -d --name ${CONTAINER_NAME} \\
-                            -p 8080:8080 \\
-                            -e SPRING_PROFILES_ACTIVE=prod \\
-                            ${DOCKER_IMAGE}
+                        docker run -d --name ${CONTAINER_NAME} \
+                            -p 8080:8080 \
+                            -e SPRING_PROFILES_ACTIVE=prod \
+                            ${DOCKER_IMAGE} \
+                            --server.port=8080
                     "
                     """
                 }
