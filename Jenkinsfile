@@ -34,7 +34,7 @@ pipeline {
 
         stage('Copy To Remote') {
             steps {
-                sshagent(credentials: ['jenkins-rsa-key']) {
+                sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 '
                         sudo rm -rf /home/ec2-user/deploy &&
