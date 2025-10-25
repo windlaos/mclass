@@ -31,10 +31,14 @@ pipeline {
         stage('Prepare Build Artifacts') {
             steps {
                 sh '''
-                    mkdir -p deploy
+                    rm -rf deploy
+                    mkdir -p deploy/static
+
                     cp Dockerfile deploy/
                     cp target/demo-0.0.1-SNAPSHOT.jar deploy/app.jar
-                    cp -R src/main/resources/static/images deploy/static/images
+            
+                    # ✅ static 전체 복사
+                    cp -R src/main/resources/static/* deploy/static/
                 '''
             }
         }
