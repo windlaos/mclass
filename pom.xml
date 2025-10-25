@@ -42,7 +42,7 @@
 
         <!-- ✅ MySQL 버전 명시 -->
         <dependency>
-            <groupId>mysql</groupId>
+            <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.3.0</version>
         </dependency>
