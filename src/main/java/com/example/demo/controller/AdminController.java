@@ -1,40 +1,22 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Product;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.FileUploadService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AdminController {
 
-    private final ProductService productService;
-    private final FileUploadService fileUploadService;
-
-    @GetMapping("/admin/product/new")
-    public String newProductForm(Model model) {
-        model.addAttribute("product", new Product());
-        return "admin/product-form";
+    // 관리자 로그인 페이지
+    @GetMapping("/login")
+    public String adminLogin() {
+        return "admin/login";
     }
 
-    @PostMapping("/admin/product/save")
-    public String saveProduct(Product product,
-                              @RequestParam("imageFile") MultipartFile imageFile) {
-
-        if (!imageFile.isEmpty()) {
-            String imageUrl = fileUploadService.saveImage(imageFile);
-            product.setImageUrl(imageUrl);
-        }
-
-        productService.save(product);
-        return "redirect:/admin/products";
+    // 관리자 대시보드(로그인 성공 후 이동)
+    @GetMapping
+    public String dashboard() {
+        return "admin/dashboard"; // 없으면 admin/product-list로 바꿔도 됨
     }
 }
-

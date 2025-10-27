@@ -5,7 +5,6 @@ import com.example.demo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -22,7 +21,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Product findById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다. id=" + id));
+            .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다. id=" + id));
     }
 
     @Transactional
@@ -35,4 +34,3 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 }
-
