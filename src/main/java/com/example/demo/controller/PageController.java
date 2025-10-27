@@ -8,12 +8,12 @@ public class PageController {
 
     @GetMapping("/company")
     public String company() {
-        return "company"; // templates/company.html
+        return "company";
     }
 
     @GetMapping("/privacy")
     public String privacy() {
-        return "privacy"; // templates/privacy.html
+        return "privacy";
     }
 }
 
