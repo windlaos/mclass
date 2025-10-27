@@ -4,89 +4,119 @@
     <meta charset="UTF-8">
     <title>경동 쇼핑몰 DEMO</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
-            background-color: #f8f9fa;
+            background: #f5f6fa;
             font-family: 'Noto Sans KR', sans-serif;
         }
 
+        /* 상단 네비 */
         .navbar {
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background: linear-gradient(90deg, #0072ff 0%, #004bfe 100%);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
         }
 
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        /* 헤더 Section */
+        .hero-section {
+            background: url('https://cdn.pixabay.com/photo/2017/08/06/07/50/supermarket-2586086_1280.jpg') center/cover no-repeat;
+            padding: 80px 0;
+            color: white;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+            border-bottom: 4px solid #0072ff;
+        }
+
+        /* 상품 카드 */
+        .product-card {
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
+            background: white;
+            transition: 0.25s;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.18);
         }
 
-        .card img {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            background-color: #fff;
+        .product-card img {
+            background: #fff;
+            padding: 20px;
+            height: 240px;
+            object-fit: contain;
         }
 
+        .price-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* 푸터 */
         footer {
-            background: #222;
-            color: #ccc;
-            font-size: 0.9rem;
+            margin-top: 60px;
+            padding: 25px 0;
+            background: #1e1e1e;
+            color: #ddd;
         }
 
         footer a {
-            color: #ddd;
             text-decoration: none;
+            color: #ccc;
         }
 
         footer a:hover {
             color: #fff;
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
+<nav class="navbar navbar-dark px-4">
     <a class="navbar-brand fw-bold fs-4 text-white" href="/">🛒 경동 쇼핑몰</a>
     <div class="ms-auto">
         <a href="/cart" class="btn btn-warning fw-bold">🛍 장바구니</a>
     </div>
 </nav>
 
-<div class="container py-5">
-    <div class="text-center mb-5">
-        <h1 class="fw-bold text-dark">경동 쇼핑몰</h1>
-        <p class="text-muted">믿을 수 있는 품질, 합리적인 가격</p>
-    </div>
+<!-- ★ 히어로 배너 추가 -->
+<div class="hero-section text-center">
+    <h1 class="fw-bold display-5">경동 쇼핑몰에 오신 것을 환영합니다</h1>
+    <p class="fs-5 mt-3">믿을 수 있는 품질, 합리적인 가격으로 만나보세요</p>
+</div>
 
-    <div class="row justify-content-center g-4" th:if="${products != null}">
-        <div class="col-md-3 col-sm-6" th:each="product : ${products}">
-            <div class="card shadow-sm h-100">
-                <img th:src="@{${product.imageUrl}}" class="card-img-top p-3" style="height:220px; object-fit:contain;">
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold" th:text="${product.name}"></h5>
-                    <p class="text-danger fw-bold fs-5" th:text="|${product.price}원|"></p>
-                    <div class="d-flex justify-content-center gap-2">
-                        <a th:href="@{'/product/' + ${product.id}}" class="btn btn-outline-primary btn-sm">상세보기</a>
-                        <a th:href="@{'/cart/add/' + ${product.id}}" class="btn btn-success btn-sm">장바구니</a>
-                    </div>
+<div class="container py-5">
+
+    <div class="row g-4 justify-content-center" th:if="${products != null}">
+        <div class="col-lg-3 col-md-4 col-sm-6" th:each="product : ${products}">
+            <div class="product-card text-center">
+                <img th:src="@{${product.imageUrl}}">
+                <div class="p-3">
+                    <h6 class="fw-bold text-dark" th:text="${product.name}"></h6>
+                    <p class="text-danger price-text" th:text="|${product.price}원|"></p>
+                    <a th:href="@{'/product/' + ${product.id}}" class="btn btn-outline-primary btn-sm">상세보기</a>
+                    <a th:href="@{'/cart/add/' + ${product.id}}" class="btn btn-success btn-sm">담기</a>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
-<footer class="text-center py-4 mt-5">
+<footer class="text-center">
     <div>
-        <a href="/company">회사소개</a> |
+        <a href="/company">회사소개</a>
+        &nbsp;|&nbsp;
         <a href="/privacy">개인정보처리방침</a>
     </div>
-    <div class="mt-2">© 2025 Kyongdong Mall. All rights reserved.</div>
+    <div class="mt-2">
+        © 2025 Kyongdong Mall. All rights reserved.
+    </div>
 </footer>
 
 </body>
