@@ -1,14 +1,15 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "users") // user 예약어 방지
+@Table(name = "users")
 public class User {
 
     @Id
@@ -16,10 +17,10 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String username; // 로그인 ID
 
     @Column(nullable = false)
-    private String password;
+    private String password; // 암호화된 비밀번호
 
     @Column(nullable = false)
     private String role; // ROLE_ADMIN, ROLE_USER
