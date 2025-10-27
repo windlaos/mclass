@@ -25,14 +25,15 @@ pipeline {
             steps {
                 sh '''
                 rm -rf deploy
-                mkdir -p deploy/static
+                mkdir -p deploy/static/images
                 mkdir -p deploy/templates
 
                 cp Dockerfile deploy/
                 cp target/demo-0.0.1-SNAPSHOT.jar deploy/app.jar
 
-                cp -R src/main/resources/static/* deploy/static/
-                cp -R src/main/resources/templates/* deploy/templates/
+                # ✅ images 복사
+                cp -R src/main/resources/static/images/ deploy/static/images/
+                cp -R src/main/resources/templates/ deploy/templates/
                 '''
             }
         }
@@ -42,35 +43,6 @@ pipeline {
                 sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 "
-                        sudo rm -rf /home/ec2-user/deploy &&
-                        mkdir -p /home/ec2-user/deploy &&
-                        sudo chown -R ec2-user:ec2-user /home/ec2-user/deploy
-                    "
+                        sudo rm -rf /hom
 
-                    scp -o StrictHostKeyChecking=no -r deploy/* ec2-user@52.79.236.237:/home/ec2-user/deploy/
-                    '''
-                }
-            }
-        }
-
-        stage('Docker Remote Deploy') {
-            steps {
-                sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
-                    sh '''
-                    ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 "
-                        cd /home/ec2-user/deploy &&
-                        docker rm -f springboot-container || true &&
-                        docker build -t demo-app . &&
-                        docker run -d --name springboot-container \
-                            -p 8080:80 \
-                            -e SPRING_PROFILES_ACTIVE=prod \
-                            demo-app &&
-                        sudo systemctl restart nginx
-                    "
-                    '''
-                }
-            }
-        }
-    }
-}
 
