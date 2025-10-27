@@ -17,14 +17,4 @@ public class HomeController {
         model.addAttribute("products", productService.findAll());
         return "index";  // index.html
     }
-
-    @GetMapping("/company")
-    public String company() {
-        return "company"; // templates/company.html
-    }
-
-    @GetMapping("/privacy")
-    public String privacy() {
-        return "privacy"; // templates/privacy.html
-    }
 }
