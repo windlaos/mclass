@@ -1,17 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>회사소개</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko"
+      th:replace="layout :: content">
 
-<h1>회사소개</h1>
+<div class="container my-5" style="max-width: 850px;">
 
-<p>
-경동 쇼핑몰은 고객님께 안전하고 믿을 수 있는 상품을 제공하기 위해 최선을 다하고 있습니다.<br>
-앞으로도 더 나은 서비스와 다양한 혜택으로 보답하겠습니다.
-</p>
+    <h1 class="fw-bold mb-3">회사소개</h1>
+    <hr>
 
-</body>
+    <p>
+        경동 쇼핑몰(www.kyongdong.shop)은 고객에게 신뢰할 수 있는 제품과
+        편리한 쇼핑 환경을 제공하기 위해 설립된 온라인 쇼핑 서비스입니다.
+    </p>
+
+    <p>
+        우리는 고객의 일상에 가치를 더할 수 있는 상품을 제공하며,
+        항상 고객의 만족을 최우선으로 생각합니다.  
+        앞으로도 고객 여러분의 의견에 귀 기울이며 더 나은 서비스를 위해 노력하겠습니다.
+    </p>
+
+    <h2 class="fw-bold fs-5 mt-4">오시는 길</h2>
+    <p>
+        경기도 성남시 분당구 수내로 181 (수내동, 경동빌딩)  
+        고객센터: 02-6400-2449  
+        이메일: support@kyongdong.shop
+    </p>
+
+    <h2 class="fw-bold fs-5 mt-4">운영 정보</h2>
+    <ul>
+        <li>운영사: 주식회사 경동몰</li>
+        <li>대표자: 장채원</li>
+        <li>사업자등록번호: 123-45-67890 (예시)</li>
+    </ul>
+
+</div>
 </html>

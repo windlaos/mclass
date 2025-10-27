@@ -1,23 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${product.name}">상품 상세</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko"
+      th:replace="layout :: content">
 
-<h2 th:text="${product.name}"></h2>
+<div class="container mt-5" th:if="${product != null}">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
 
-<img th:src="@{${product.imageUrl}}"
-     onerror="this.src='/images/no_image.png';"
-     width="300"><br><br>
+            <!-- 상품 이미지 -->
+            <img th:src="@{${product.imageUrl}}"
+                 class="img-fluid border"
+                 style="max-height:300px; object-fit:contain;"
+                 onerror="this.src='/images/no_image.png';">
 
-<p th:text="|가격: ${product.price}원|"></p>
-<p th:text="${product.description}"></p>
+            <h2 class="mt-4 fw-bold" th:text="${product.name}"></h2>
 
-<a th:href="@{'/cart/add/' + ${product.id}}">장바구니 담기</a><br>
+            <!-- 가격 -->
+            <p class="text-danger fw-bold fs-4"
+               th:text="|${product.price}원|"></p>
 
-<a href="/">상품 목록으로</a>
+            <!-- 설명 -->
+            <p class="mt-2" th:text="${product.description}"></p>
 
-</body>
+            <!-- 버튼 -->
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a th:href="@{'/cart/add/' + ${product.id}}"
+                   class="btn btn-success btn-lg">장바구니 담기</a>
+
+                <a href="/" class="btn btn-secondary btn-lg">목록으로</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </html>
