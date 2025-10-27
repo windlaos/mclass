@@ -1,10 +1,10 @@
-package com.yourpackage.controller; // 실제 패키지명에 맞게 수정하세요
+package com.example.demo.controller;
 
+import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.yourpackage.service.ProductService; // 패키지 경로 맞게 수정
 
 @Controller
 @RequiredArgsConstructor
