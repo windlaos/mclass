@@ -6,94 +6,113 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
 <style>
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(140deg, #0075ff 0%, #00a6ff 100%);
-        padding: 60px 20px;
-        text-align: center;
-        color: #ffffff;
-        border-radius: 0 0 28px 28px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        margin-bottom: 40px;
-    }
 
-    .hero-section h1 {
-        font-size: 38px;
-        font-weight: 800;
-        margin-bottom: 12px;
-        text-shadow: 0 3px 9px rgba(0,0,0,0.25);
-    }
-
-    .hero-section p {
-        font-size: 18px;
-        opacity: 0.95;
-        margin-bottom: 0;
-    }
-
-    .card {
+    /* 카드 Hover 효과 */
+    .product-card {
         border: none;
-        border-radius: 16px;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+        transition: .28s ease;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     }
-
-    .card:hover {
+    .product-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.16);
     }
 
-    footer a:hover {
-        text-decoration: underline;
-        color: #ffd34e !important ;
+    /* 이미지 스타일 */
+    .product-img {
+        height: 230px;
+        object-fit: cover;
+        border-radius: 18px;
     }
+
+    /* 가격 */
+    .price-original {
+        text-decoration: line-through;
+        color: #8e8e8e;
+        font-size: 15px;
+        margin-right: 6px;
+    }
+    .price-sale {
+        color: #E60023;
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    /* 배지 */
+    .benefit-badge {
+        font-size: 12px;
+        border-radius: 6px;
+        padding: 3px 7px;
+        margin-right: 4px;
+        white-space: nowrap;
+    }
+    .badge-point { background-color: #ff7b22; color: #fff; }
+    .badge-free { background-color: #ff4d4d; color: #fff; }
+
 </style>
 </head>
 
 <body class="bg-light">
 
-<!-- 네비게이션 -->
+<!-- 네비게이션 동일 유지 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4 shadow-sm">
     <a class="navbar-brand fw-bold fs-4 text-white" href="/">🛒 경동 쇼핑몰</a>
-
     <div class="ms-auto">
         <a href="/cart" class="btn btn-warning fw-bold shadow-sm">🛍 장바구니</a>
     </div>
 </nav>
 
-<!-- Hero Section / 안내 문구 -->
-<div class="hero-section">
-    <h1>경동 쇼핑몰에 오신 것을 환영합니다 🎉</h1>
-    <p>신선함과 품질을 합리적인 가격으로 제공합니다!</p>
-</div>
-
-<!-- 상품 목록 -->
-<div class="container">
+<!-- 메인 상품 영역 -->
+<div class="container mt-5">
     <div class="row justify-content-center g-4" th:if="${products != null}">
-        <div class="col-md-4" th:each="product : ${products}">
-            <div class="card shadow-sm">
-                <img th:src="@{'/images/product' + ${product.id} + '.jpeg'}"
-                     class="card-img-top p-3"
-                     style="height:240px; object-fit:contain;">
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold" th:text="${product.name}"></h5>
-                    <p class="text-danger fw-bold fs-5" th:text="|${product.price}원|"></p>
 
-                    <div class="d-flex justify-content-center gap-2">
-                        <a th:href="@{'/product/' + ${product.id}}"
-                           class="btn btn-primary btn-sm">상세보기</a>
-                        <a th:href="@{'/cart/add/' + ${product.id}}"
-                           class="btn btn-success btn-sm">장바구니</a>
-                    </div>
+        <div class="col-md-4" th:each="product : ${products}">
+            <div class="product-card p-3">
+
+                <!-- ✅ 상품 이미지 -->
+                <img th:src="@{'/images/product' + ${product.id} + '.jpeg'}"
+                     class="product-img w-100 mb-3"
+                     onerror="this.src='/images/no_image.png';">
+
+                <h6 class="fw-bold text-dark mb-2" 
+                    th:text="${product.name}"></h6>
+
+                <!-- ✅ 가격 구성 -->
+                <div>
+                    <span class="price-original"
+                          th:text="|${product.price + 2000}원|"></span>
+                    <span class="price-sale"
+                          th:text="|${product.price}원|"></span>
                 </div>
+
+                <!-- ✅ 혜택 배지 구성 -->
+                <div class="mt-2">
+                    <span class="benefit-badge badge-point"
+                          th:text="|${product.price / 100}P 적립|"></span>
+                    <span class="benefit-badge badge-free">무료배송</span>
+                </div>
+
+                <!-- ✅ 버튼 -->
+                <div class="d-flex justify-content-center gap-2 mt-3">
+                    <a th:href="@{'/product/' + ${product.id}}"
+                       class="btn btn-outline-primary btn-sm">상세보기</a>
+                    <a th:href="@{'/cart/add/' + ${product.id}}"
+                       class="btn btn-danger btn-sm">장바구니</a>
+                </div>
+
             </div>
         </div>
+
     </div>
 </div>
 
-<!-- Footer -->
 <footer class="bg-dark text-white text-center py-4 mt-5">
     <a href="/company" class="text-white mx-2">회사소개</a> |
     <a href="/privacy" class="text-white mx-2">개인정보처리방침</a>
-    <p class="mt-2 mb-0">© 2025 Kyongdong Mall. All rights reserved.</p>
+    <p class="mt-2 mb-0">© 2025 Kyongdong Mall</p>
 </footer>
 
 </body>
