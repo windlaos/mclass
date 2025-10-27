@@ -2,37 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>장바구니</title>
+    <title>?�바구니</title>
 </head>
 <body>
 
-<h2>🛒 장바구니 목록</h2>
+<h2>?�� ?�바구니 목록</h2>
 <hr>
 
 <div th:if="${#lists.isEmpty(cart)}">
-    장바구니가 비어 있습니다.<br><br>
-    <a href="/">← 쇼핑하러 가기</a>
+    ?�바구니가 비어 ?�습?�다.<br><br>
+    <a href="/">???�핑?�러 가�?/a>
 </div>
 
 <table th:if="${!#lists.isEmpty(cart)}" border="1" cellpadding="10">
     <thead>
         <tr>
-            <th>이미지</th>
-            <th>상품명</th>
-            <th>가격</th>
+            <th>?��?지</th>
+            <th>?�품�?/th>
+            <th>가�?/th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="item : ${cart}">
             <td><img th:src="@{${item.imageUrl}}" width="80"></td>
             <td th:text="${item.name}"></td>
-            <td th:text="${item.price + '원'}"></td>
+            <td th:text="${item.price + '??}"></td>
         </tr>
     </tbody>
 </table>
 
 <br>
-<a href="/">← 쇼핑 계속하기</a>
+<a href="/">???�핑 계속?�기</a>
 
 </body>
 </html>

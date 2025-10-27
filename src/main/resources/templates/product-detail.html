@@ -2,25 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${product.name}">상품 상세</title>
+    <title th:text="${product.name}">?�품 ?�세</title>
 </head>
 <body>
 
 <h2 th:text="${product.name}"></h2>
 
-<!-- 이미지가 없으면 기본 이미지 로드하도록 수정 -->
+<!-- ?��?지가 ?�으�?기본 ?��?지 로드?�도�??�정 -->
 <img th:src="@{${product.imageUrl}}"
      onerror="this.src='/images/no_image.png';"
      width="300"><br><br>
 
-<p th:text="'가격 : ' + ${product.price} + '원'"></p>
+<p th:text="'가�?: ' + ${product.price} + '??"></p>
 <p th:text="${product.description}"></p>
 
-<!-- ✅ 절대 경로로 수정 -->
-<a th:href="@{'/cart/add/' + ${product.id}}">장바구니 담기</a><br>
+<!-- ???��? 경로�??�정 -->
+<a th:href="@{'/cart/add/' + ${product.id}}">?�바구니 ?�기</a><br>
 
-<!-- 목록으로 이동 -->
-<a href="/">← 목록으로</a>
+<!-- 목록?�로 ?�동 -->
+<a href="/">??목록?�로</a>
 
 </body>
 </html>
