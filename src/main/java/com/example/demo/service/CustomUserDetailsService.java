@@ -1,31 +1,28 @@
-package com.example.demo.service;
+package com.example.demo.config;
 
-import com.example.demo.model.Admin;
-import com.example.demo.repository.AdminRepository;
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final AdminRepository adminRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        Admin admin = adminRepository.findByUsername(username)
-                .orElseThrow(() -> 
-                    new UsernameNotFoundException("관리자 계정을 찾을 수 없습니다."));
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() ->
+                new UsernameNotFoundException("user not found: " + username));
 
-        return new User(
-                admin.getUsername(),
-                admin.getPassword(),
-                Collections.emptyList()
-        );
+        return User.withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRole().substring(5)) // ROLE_ADMIN → ADMIN
+                .build();
     }
 }
