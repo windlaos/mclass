@@ -9,7 +9,7 @@
 <body class="bg-light">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
-    <a class="navbar-brand fw-bold fs-4 text-white" href="/">🛒 경동 쇼핑몰 </a>
+    <a class="navbar-brand fw-bold fs-4 text-white" href="/">🛒 경동 쇼핑몰</a>
     <div class="ms-auto">
         <a href="/cart" class="btn btn-warning fw-bold">🛍 장바구니</a>
     </div>
@@ -24,7 +24,7 @@
                      style="height:250px; object-fit:contain;">
                 <div class="card-body text-center">
                     <h5 class="card-title" th:text="${product.name}"></h5>
-                    <p class="text-danger fw-bold fs-5" th:text="${product.price} + '원'"></p>
+                    <p class="text-danger fw-bold fs-5" th:text="|${product.price}원|"></p>
 
                     <div class="d-flex justify-content-center gap-2">
                         <a th:href="@{'/product/' + ${product.id}}" class="btn btn-primary btn-sm">상세보기</a>
