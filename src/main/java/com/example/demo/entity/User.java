@@ -17,11 +17,11 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username; // 로그인 ID
+    private String username;
 
     @Column(nullable = false)
-    private String password; // 암호화된 비밀번호
+    private String password;
 
     @Column(nullable = false)
-    private String role; // ROLE_ADMIN, ROLE_USER
+    private String role;
 }
