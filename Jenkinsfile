@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh "mvn clean package -DskipTests"
             }
         }
 
@@ -31,5 +31,46 @@ pipeline {
                 cp Dockerfile deploy/
                 cp target/demo-0.0.1-SNAPSHOT.jar deploy/app.jar
 
-                # ✅ static 전체 복사 (기존 images 만 복사는 잘못된 방식)
-                c
+                cp -R src/main/resources/static/* deploy/static/
+                cp -R src/main/resources/templates/* deploy/templates/
+                '''
+            }
+        }
+
+        stage('Copy To Remote') {
+            steps {
+                sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 "
+                        sudo rm -rf /home/ec2-user/deploy &&
+                        mkdir -p /home/ec2-user/deploy &&
+                        sudo chown -R ec2-user:ec2-user /home/ec2-user/deploy
+                    "
+
+                    scp -o StrictHostKeyChecking=no -r deploy/* ec2-user@52.79.236.237:/home/ec2-user/deploy/
+                    '''
+                }
+            }
+        }
+
+        stage('Docker Remote Deploy') {
+            steps {
+                sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 "
+                        cd /home/ec2-user/deploy &&
+                        docker rm -f springboot-container || true &&
+                        docker build -t demo-app . &&
+                        docker run -d --name springboot-container \
+                            -p 8080:80 \
+                            -e SPRING_PROFILES_ACTIVE=prod \
+                            demo-app &&
+                        sudo systemctl restart nginx
+                    "
+                    '''
+                }
+            }
+        }
+    }
+}
+
