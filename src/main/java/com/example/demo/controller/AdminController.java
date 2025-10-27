@@ -18,12 +18,6 @@ public class AdminController {
     private final ProductService productService;
     private final FileUploadService fileUploadService;
 
-    @GetMapping("/admin/products")
-    public String adminProducts(Model model) {
-        model.addAttribute("products", productService.findAll());
-        return "admin/product-list";
-    }
-
     @GetMapping("/admin/product/new")
     public String newProductForm(Model model) {
         model.addAttribute("product", new Product());
