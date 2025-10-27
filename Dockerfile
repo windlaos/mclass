@@ -1,7 +1,9 @@
-rm -rf deploy
-mkdir -p deploy/static
-mkdir -p deploy/templates
-cp Dockerfile deploy/
-cp target/demo-0.0.1-SNAPSHOT.jar deploy/app.jar
-cp -R src/main/resources/static deploy/static/
-cp -R src/main/resources/templates deploy/templates/
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+COPY app.jar app.jar
+COPY static/ /app/static/
+COPY templates/ /app/templates/
+
+EXPOSE 80
+ENTRYPOINT ["java", "-jar", "app.jar"]
