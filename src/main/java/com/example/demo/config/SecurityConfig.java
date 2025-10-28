@@ -36,7 +36,8 @@ public class SecurityConfig {
                         "/admin/css/**",
                         "/admin/js/**"
                 ).permitAll()
-                .anyRequest().hasRole("ADMIN")  // ✅ DB에는 ADMIN으로 저장, Spring이 ROLE_ 자동 붙임
+                // DB에 role이 'ADMIN'이든 'ROLE_ADMIN'이든 모두 통과 가능하도록 설정
+                .anyRequest().hasAnyAuthority("ROLE_ADMIN", "ADMIN")
             )
             .formLogin(login -> login
                 .loginPage("/admin/login")
@@ -89,7 +90,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     /** 인증 공급자 설정 (UserDetailsService + PasswordEncoder) */
     @Bean
