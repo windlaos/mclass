@@ -1,9 +1,9 @@
-FROM openjdk:17-jdk-slim
+FROM amazoncorretto:17-alpine
 WORKDIR /app
+COPY app.jar /app/app.jar
 
-COPY app.jar app.jar
-COPY static/ /app/static/
-COPY templates/ /app/templates/
+#COPY static/ /app/static/
+#COPY templates/ /app/templates/
 
 EXPOSE 80
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java","-Dserver.port=80","-jar","/app/app.jar"]
