@@ -41,12 +41,12 @@ pipeline {
             steps {
                 sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 "
+                        ssh -o StrictHostKeyChecking=no ec2-user@54.180.144.135 "
                             sudo rm -rf /home/ec2-user/deploy &&
                             mkdir -p /home/ec2-user/deploy &&
                             sudo chown -R ec2-user:ec2-user /home/ec2-user/deploy
                         "
-                        scp -o StrictHostKeyChecking=no -r deploy/* ec2-user@52.79.236.237:/home/ec2-user/deploy/
+                        scp -o StrictHostKeyChecking=no -r deploy/* ec2-user@54.180.144.135:/home/ec2-user/deploy/
                     '''
                 }
             }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['7c9eb59f-8c52-4c9c-bcd1-fa48dacd7fc8']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@52.79.236.237 "
+                        ssh -o StrictHostKeyChecking=no ec2-user@54.180.144.135 "
                             cd /home/ec2-user/deploy &&
                             docker rm -f springboot-container || true &&
                             docker build -t demo-app . &&
